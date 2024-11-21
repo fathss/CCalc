@@ -2,90 +2,34 @@
 #include <string.h>
 #include <math.h>
 
-void display();
-void operasiMTK();
-void konversi();
-void desimalToBiner (int x);
-int binerToDesimal (int x);
-int oktalToDesimal (int x);
-int heksaToDesimal (char x[]);
-void negatif (int x);
-
-main (){
-
-    int pilihan;
-    do
-    {
-        display();
-        scanf("%d", &pilihan);
-
-        switch (pilihan)
-        {
-            case 1:
-                operasiMTK();
-                break;
-            case 2:
-                konversi();
-                break;
-            case 3:
-                puts("Keluar");
-                break;
-            default:
-                puts("Input salah, coba lagi\n");
-                break;
-        }
-    }while (pilihan != 3);
-
-    return 0;
-}
-
 void display(){
     puts("K A L K U L A T O R  P R O G R A M M E R");
     puts("----------------------------------------");
-    puts("1. Operasi matematika");
+    puts("1. Operasi aritmatika");
     puts("2. Konversi dasar");
     puts("3. Keluar");
     printf("Pilih pilihan menu: ");
 }
 
-void operasiMTK(){
+void aritmatika(){
     int pilihan;
-    float bil1, bil2;
-    puts("\nOPERASI MATEMATIKA");
-    puts("--------------------");
-    puts("1. Penjumlahan");
-    puts("2. Pengurangan");
-    puts("3. Perkalian");
-    puts("4. Pembagian");
-    puts("5. Sisa pembagian");
-    printf("Pilih pilihan menu: ");
+    puts("A R I T M A T I K A");
+    puts("-------------------");
+    puts("1. Matematika");
+    puts("2. Programming");
+    printf("Pilih jenis operasi aritmatika: ");
     scanf("%d", &pilihan);
 
     switch (pilihan)
     {
         case 1:
-            printf("Masukkan dua bilangan (bil1 bil2): ");
-            scanf("%f %f", &bil1, &bil2);
-            printf("Hasil penjumlahan %.f + %.f: %.f\n\n", bil1, bil2, bil1+bil2);
+            matematika();
             break;
         case 2:
-            printf("Masukkan dua bilangan (bil1 bil2): ");
-            scanf("%f %f", &bil1, &bil2);
-            printf("Hasil pengurangan %.f - %.f: %.f\n\n", bil1, bil2, bil1-bil2);
-            break;
-        case 3:
-            printf("Masukkan dua bilangan (bil1 bil2): ");
-            scanf("%f %f", &bil1, &bil2);
-            printf("Hasil perkalian %.f x %.f: %.f\n\n", bil1, bil2, bil1*bil2);
-            break;
-        case 4:
-            printf("Masukkan dua bilangan (bil1 bil2): ");
-            scanf("%f %f", &bil1, &bil2);
-            printf("Hasil pembagian %.f / %.f: %.f\n\n", bil1, bil2, bil1/bil2);
+            programming();
             break;
         default:
-            puts("Input salah, coba lagi\n");
-            operasiMTK();
+            puts("Input salah coba lagi");
             break;
     }
 }
@@ -123,8 +67,9 @@ void konversi(){
             printf("Masukkan Oktal : ");
             scanf("%d", &oktal);
             printf("Desimal      : %d\n", oktalToDesimal(oktal));
+            printf("Biner        : ");
             desimalToBiner(oktalToDesimal(oktal));
-            printf("Heksadesimal : %X\n\n", oktalToDesimal(oktal));
+            printf("\nHeksadesimal : %X\n\n", oktalToDesimal(oktal));
             break;
         case 4:
             printf("Masukkan Heksadesimal : ");
@@ -154,9 +99,8 @@ void konversi(){
     }
 }
 
-void desimalToBiner(int x){
-    printf("Biner        : ");
-    int biner[32];
+void desimalToBiner(long int x){
+    int biner[20];
     int i = 0;
     while (x > 0){
         biner[i] = x % 2;
@@ -166,11 +110,10 @@ void desimalToBiner(int x){
     for (int j = i-1; j >= 0; j--){
         printf("%d", biner[j]);
     }
-    puts("");
 }
 
-int binerToDesimal(int x){
-    int hasil = 0;
+int binerToDesimal(long long int x){
+    long int hasil = 0;
     int i = 0;
     while (x > 0){
         hasil += (x % 10) * pow(2, i);
@@ -180,8 +123,8 @@ int binerToDesimal(int x){
     return hasil;
 }
 
-int oktalToDesimal(int x){
-    int hasil = 0;
+int oktalToDesimal(long long int x){
+    long int hasil = 0;
     int i = 0;
     while (x > 0){
         hasil += (x % 10) * pow(8, i);
@@ -210,18 +153,123 @@ int heksaToDesimal(char x[]){
     return hasil + isValid - 1;
 }
 
-void negatif(int x){
-    printf("Biner            : ");
-    int biner[32];
-    int i = 0;
-    while (x > 0){
-        biner[i] = x % 2;
-        x /= 2;
-        i++;
-    }
+long int tambah(long int a, long int b){
+    return a + b;
+}
 
-    for (i = 31; i >= 0; i--){
-        if (biner[i] == 1) printf("0");
-        else printf("1");
+long int kurang(long int a, long int b){
+    return a - b;
+}
+
+long int kali(long int a, long int b){
+    return a * b;
+}
+
+void programming(){
+    int pilihan;
+    long int hasil;
+    puts("1. Biner");
+    puts("2. Oktal");
+    puts("3. Heksadesimal");
+    puts("4. Beda jenis");
+    printf("Pilih tipe data untuk operasi aritmatika: ");
+    scanf("%d", &pilihan);
+
+    int operasi;
+    puts("1. Penambahan");
+    puts("2. Pengurangan");
+    puts("3. Perkalian");
+    puts("4. Pembagian");
+    printf("Pilih operasi yang diingingkan: ");
+    scanf("%d", &operasi);
+
+    switch (pilihan)
+    {
+        case 1:
+            switch (operasi)
+            {
+                case 1:
+                    hasil = arbiner(tambah);
+                    break;
+                case 2:
+                    hasil = arbiner(kurang);
+                    break;
+                case 3:
+                    hasil = arbiner(kali);
+                    break;
+            }
+            printf("Hasil: ");
+            desimalToBiner(hasil);
+            puts("");
+            break;
+
+        case 2:
+            switch (operasi)
+            {
+                case 1:
+                    hasil = aroktal(tambah);
+                    break;
+                case 2:
+                    hasil = aroktal(kurang);
+                    break;
+                case 3:
+                    hasil = aroktal(kali);
+                    break;
+            }
+            printf("Hasil: %o\n", hasil);
     }
+}
+
+int arbiner(long int (*operasi)(long long int, long long int)){
+    long long int biner1, biner2;
+    printf("Masukkan biner 1: ");
+    scanf("%lld", &biner1);
+    printf("Masukkan biner 2: ");
+    scanf("%lld", &biner2);
+
+    long int des1 = binerToDesimal(biner1);
+    long int des2 = binerToDesimal(biner2);
+
+    return operasi(des1, des2);
+}
+
+int aroktal(long int (*operasi)(long long int, long long int)){
+    long long int oktal1, oktal2;
+    printf("Masukkan oktal 1: ");
+    scanf("%lld", &oktal1);
+    printf("Masukkan oktal 2: ");
+    scanf("%lld", &oktal2);
+
+    long int des1 = oktalToDesimal(oktal1);
+    long int des2 = oktalToDesimal(oktal2);
+
+    return operasi(des1, des2);
+}
+
+main (){
+
+    int pilihan;
+    do
+    {
+        display();
+        scanf("%d", &pilihan);
+
+        switch (pilihan)
+        {
+            case 1:
+                aritmatika();
+                break;
+            case 2:
+                konversi();
+                break;
+            case 3:
+                puts("Keluar");
+                exit(0);
+            default:
+                puts("Input salah, coba lagi\n");
+                break;
+        }
+    }while (pilihan != 3);
+
+    return 0;
 }
