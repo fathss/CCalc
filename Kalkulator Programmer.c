@@ -34,140 +34,54 @@ void aritmatika(){
     }
 }
 
-void konversi(){
-    int pilihan, desimal, biner, oktal;
-    char heksa[20];
-    puts("\nKONVERSI DASAR");
-    puts("----------------");
-    puts("1. Desimal");
-    puts("2. Biner");
-    puts("3. Oktal");
-    puts("4. Heksadesimal");
-    puts("5. Desimal Negatif");
-    printf("Pilih tipe awal: ");
-    scanf("%d", &pilihan);
+void matematika(){
+    double bil1, bil2, hasil;
+    char op;
+    printf("Masukkan bilangan beserta operasinya (bil1) (operator) (bil2): ");
+    scanf("%lf %c %lf", &bil1, &op, &bil2);
 
-    switch (pilihan)
+    switch (op)
     {
-        case 1:
-            printf("Masukkan desimal : ");
-            scanf("%d", &desimal);
-            desimalToBiner(desimal);
-            printf("Oktal        : %o\n", desimal);
-            printf("Heksadesimal : %X\n\n", desimal);
+        case '+':
+            hasil = bil1 + bil2;
             break;
-        case 2:
-            printf("Masukkan biner : ");
-            scanf("%d", &biner);
-            printf("Desimal      : %d\n", binerToDesimal(biner));
-            printf("Oktal        : %o\n", binerToDesimal(biner));
-            printf("Heksadesmial : %X\n\n", binerToDesimal(biner));
+        case '-':
+            hasil = bil1 - bil2;
             break;
-        case 3:
-            printf("Masukkan Oktal : ");
-            scanf("%d", &oktal);
-            printf("Desimal      : %d\n", oktalToDesimal(oktal));
-            printf("Biner        : ");
-            desimalToBiner(oktalToDesimal(oktal));
-            printf("\nHeksadesimal : %X\n\n", oktalToDesimal(oktal));
+        case '*':
+            hasil = bil1 * bil2;
             break;
-        case 4:
-            printf("Masukkan Heksadesimal : ");
-            scanf("%s", heksa);
-            int valid = heksaToDesimal(heksa);
-            if (valid == -1){
-                printf("Input invalid, coba lagi\n");
-                konversi();
-                break;
+        case '/':
+            if (bil2 == 0){
+                printf("Pembagian dengan 0!\nProgram berhenti\n");
+                exit(0);
             }
-            else{
-                printf("Desimal      : %d\n", heksaToDesimal(heksa));
-                desimalToBiner(heksaToDesimal(heksa));
-                printf("Oktal        : %o\n\n", heksaToDesimal(heksa));
-            }
-            break;
-        case 5:
-            printf("Masukkan desimal negatif : ");
-            scanf("%d", &desimal);
-            desimal *= -1;
-            negatif(desimal);
+            hasil = bil1 / bil2;
             break;
         default:
-            puts("Input salah, coba lagi\n");
-            konversi();
+            puts("Operator salah, coba lagi");
+            matematika();
             break;
     }
+
+    printf("Hasil: %g\n\n", hasil);
 }
 
-void desimalToBiner(long int x){
-    int biner[20];
-    int i = 0;
-    while (x > 0){
-        biner[i] = x % 2;
-        x /= 2;
-        i++;
-    }
-    for (int j = i-1; j >= 0; j--){
-        printf("%d", biner[j]);
-    }
-}
-
-int binerToDesimal(long long int x){
-    long int hasil = 0;
-    int i = 0;
-    while (x > 0){
-        hasil += (x % 10) * pow(2, i);
-        x /= 10;
-        i++;
-    }
-    return hasil;
-}
-
-int oktalToDesimal(long long int x){
-    long int hasil = 0;
-    int i = 0;
-    while (x > 0){
-        hasil += (x % 10) * pow(8, i);
-        x /= 10;
-        i++;
-    }
-    return hasil;
-}
-
-int heksaToDesimal(char x[]){
-    int hasil = 0;
-    int isValid = 1;
-    for (int i = 0; i < strlen(x); i++){
-        if (x[i] >= 48 && x[i] <= 57){
-            hasil += (x[i] - 48) * pow(16, strlen(x)-1-i);
-        }
-        else if (x[i] >= 65 && x[i] <= 70){
-            hasil += (x[i] - 55) * pow(16, strlen(x)-1-i);
-        }
-        else{
-            isValid = 0;
-            hasil = 0;
-            break;
-        }
-    }
-    return hasil + isValid - 1;
-}
-
-long int tambah(long int a, long int b){
+long long int tambah(long int a, long int b){
     return a + b;
 }
 
-long int kurang(long int a, long int b){
+long long int kurang(long int a, long int b){
     return a - b;
 }
 
-long int kali(long int a, long int b){
+long long int kali(long int a, long int b){
     return a * b;
 }
 
 void programming(){
     int pilihan;
-    long int hasil;
+    long long int hasil;
     puts("1. Biner");
     puts("2. Oktal");
     puts("3. Heksadesimal");
@@ -217,10 +131,14 @@ void programming(){
                     break;
             }
             printf("Hasil: %o\n", hasil);
+        default:
+            puts("Input salah, coba lagi");
+            programming();
+            break;
     }
 }
 
-int arbiner(long int (*operasi)(long long int, long long int)){
+int arbiner(long long int (*operasi)(long long int, long long int)){
     long long int biner1, biner2;
     printf("Masukkan biner 1: ");
     scanf("%lld", &biner1);
@@ -233,7 +151,7 @@ int arbiner(long int (*operasi)(long long int, long long int)){
     return operasi(des1, des2);
 }
 
-int aroktal(long int (*operasi)(long long int, long long int)){
+int aroktal(long long int (*operasi)(long long int, long long int)){
     long long int oktal1, oktal2;
     printf("Masukkan oktal 1: ");
     scanf("%lld", &oktal1);
@@ -245,6 +163,124 @@ int aroktal(long int (*operasi)(long long int, long long int)){
 
     return operasi(des1, des2);
 }
+
+void konversi(){
+    int pilihan;
+    long long int desimal, biner, oktal;
+    char heksa[20];
+    puts("\nKONVERSI DASAR");
+    puts("----------------");
+    puts("1. Desimal");
+    puts("2. Biner");
+    puts("3. Oktal");
+    puts("4. Heksadesimal");
+    printf("Pilih tipe awal: ");
+    scanf("%d", &pilihan);
+
+    switch (pilihan)
+    {
+        case 1:
+            printf("Masukkan desimal : ");
+            scanf("%d", &desimal);
+            printf("Biner        : ");
+            desimalToBiner(desimal);
+            printf("\nOktal        : %o\n", desimal);
+            printf("Heksadesimal : %X\n\n", desimal);
+            break;
+        case 2:
+            printf("Masukkan biner : ");
+            scanf("%lld", &biner);
+            printf("Desimal      : %lld\n", binerToDesimal(biner));
+            printf("Oktal        : %o\n", binerToDesimal(biner));
+            printf("Heksadesmial : %X\n\n", binerToDesimal(biner));
+            break;
+        case 3:
+            printf("Masukkan Oktal : ");
+            scanf("%lld", &oktal);
+            printf("Desimal      : %lld\n", oktalToDesimal(oktal));
+            printf("Biner        : ");
+            desimalToBiner(oktalToDesimal(oktal));
+            printf("\nHeksadesimal : %X\n\n", oktalToDesimal(oktal));
+            break;
+        case 4:
+            printf("Masukkan Heksadesimal : ");
+            scanf("%s", heksa);
+            int valid = heksaToDesimal(heksa);
+            if (valid == -1){
+                printf("Input invalid, coba lagi\n");
+                konversi();
+                break;
+            }
+            else{
+                printf("Desimal      : %d\n", heksaToDesimal(heksa));
+                desimalToBiner(heksaToDesimal(heksa));
+                printf("Oktal        : %o\n\n", heksaToDesimal(heksa));
+            }
+            break;
+        default:
+            puts("Input salah, coba lagi\n");
+            konversi();
+            break;
+    }
+}
+
+void desimalToBiner(long long int x){
+    int biner[64];
+    int i = 0;
+    while (x > 0){
+        biner[i] = x % 2;
+        x /= 2;
+        i++;
+    }
+    for (int j = i-1; j >= 0; j--){
+        printf("%d", biner[j]);
+    }
+}
+
+int binerToDesimal(long long int x){
+    long long int hasil = 0;
+    long long int i = 0;
+    while (x > 0){
+        hasil += (x % 10) * pow(2, i);
+        x /= 10;
+        i++;
+    }
+    return hasil;
+}
+
+int oktalToDesimal(long long int x){
+    long int hasil = 0;
+    int i = 0;
+    while (x > 0){
+        hasil += (x % 10) * pow(8, i);
+        x /= 10;
+        i++;
+    }
+    return hasil;
+}
+
+int heksaToDesimal(char x[]){
+    int hasil = 0;
+    int isValid = 1;
+    for (int i = 0; i < strlen(x); i++){
+        if (x[i] >= 48 && x[i] <= 57){
+            hasil += (x[i] - 48) * pow(16, strlen(x)-1-i);
+        }
+        else if (x[i] >= 65 && x[i] <= 70){
+            hasil += (x[i] - 55) * pow(16, strlen(x)-1-i);
+        }
+        else{
+            isValid = 0;
+            hasil = 0;
+            break;
+        }
+    }
+    return hasil + isValid - 1;
+}
+
+
+
+
 
 main (){
 
