@@ -1,5 +1,6 @@
-# adding arithmetic operation
+# programmer-calculator
+A small project in C that i create
 
-Things added:
-
-1. 
+Feature:
+1. Arithmetic Operations (WIP)
+2. Conversion
