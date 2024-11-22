@@ -2,6 +2,7 @@
 #include <string.h>
 #include <math.h>
 
+typedef long long int llint;
 void display(){
     puts("K A L K U L A T O R  P R O G R A M M E R");
     puts("----------------------------------------");
@@ -67,21 +68,21 @@ void matematika(){
     printf("Hasil: %g\n\n", hasil);
 }
 
-long long int tambah(long int a, long int b){
+llint tambah(long int a, long int b){
     return a + b;
 }
 
-long long int kurang(long int a, long int b){
+llint kurang(long int a, long int b){
     return a - b;
 }
 
-long long int kali(long int a, long int b){
+llint kali(long int a, long int b){
     return a * b;
 }
 
 void programming(){
     int pilihan;
-    long long int hasil;
+    llint hasil;
     puts("1. Biner");
     puts("2. Oktal");
     puts("3. Heksadesimal");
@@ -138,8 +139,8 @@ void programming(){
     }
 }
 
-int arbiner(long long int (*operasi)(long long int, long long int)){
-    long long int biner1, biner2;
+int arbiner(llint (*operasi)(llint, llint)){
+    llint biner1, biner2;
     printf("Masukkan biner 1: ");
     scanf("%lld", &biner1);
     printf("Masukkan biner 2: ");
@@ -151,8 +152,8 @@ int arbiner(long long int (*operasi)(long long int, long long int)){
     return operasi(des1, des2);
 }
 
-int aroktal(long long int (*operasi)(long long int, long long int)){
-    long long int oktal1, oktal2;
+int aroktal(llint (*operasi)(llint, llint)){
+    llint oktal1, oktal2;
     printf("Masukkan oktal 1: ");
     scanf("%lld", &oktal1);
     printf("Masukkan oktal 2: ");
@@ -166,7 +167,7 @@ int aroktal(long long int (*operasi)(long long int, long long int)){
 
 void konversi(){
     int pilihan;
-    long long int desimal, biner, oktal;
+    llint desimal, biner, oktal;
     char heksa[20];
     puts("\nKONVERSI DASAR");
     puts("----------------");
@@ -224,7 +225,7 @@ void konversi(){
     }
 }
 
-void desimalToBiner(long long int x){
+void desimalToBiner(llint x){
     int biner[64];
     int i = 0;
     while (x > 0){
@@ -237,9 +238,9 @@ void desimalToBiner(long long int x){
     }
 }
 
-int binerToDesimal(long long int x){
-    long long int hasil = 0;
-    long long int i = 0;
+int binerToDesimal(llint x){
+    llint hasil = 0;
+    llint i = 0;
     while (x > 0){
         hasil += (x % 10) * pow(2, i);
         x /= 10;
@@ -248,8 +249,8 @@ int binerToDesimal(long long int x){
     return hasil;
 }
 
-int oktalToDesimal(long long int x){
-    long int hasil = 0;
+int oktalToDesimal(llint x){
+    llint hasil = 0;
     int i = 0;
     while (x > 0){
         hasil += (x % 10) * pow(8, i);
@@ -278,12 +279,7 @@ int heksaToDesimal(char x[]){
     return hasil + isValid - 1;
 }
 
-
-
-
-
 main (){
-
     int pilihan;
     do
     {
