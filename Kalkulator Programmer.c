@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 #include <math.h>
 
 typedef long long int llint;
+typedef int64_t int64;
 void display(){
     puts("K A L K U L A T O R  P R O G R A M M E R");
     puts("----------------------------------------");
@@ -68,15 +70,15 @@ void matematika(){
     printf("Hasil: %g\n\n", hasil);
 }
 
-llint tambah(long int a, long int b){
+int64 tambah(int64 a, int64 b){
     return a + b;
 }
 
-llint kurang(long int a, long int b){
+int64 kurang(int64 a, int64 b){
     return a - b;
 }
 
-llint kali(long int a, long int b){
+int64 kali(int64 a, int64 b){
     return a * b;
 }
 
@@ -95,7 +97,7 @@ void programming(){
     puts("2. Pengurangan");
     puts("3. Perkalian");
     puts("4. Pembagian");
-    printf("Pilih operasi yang diingingkan: ");
+    printf("Pilih operasi yang diinginkan: ");
     scanf("%d", &operasi);
 
     switch (pilihan)
@@ -135,32 +137,28 @@ void programming(){
         default:
             puts("Input salah, coba lagi");
             programming();
-            break;
-    }
-}
-
-int arbiner(llint (*operasi)(llint, llint)){
-    llint biner1, biner2;
+int64 arbiner(int64 (*operasi)(int64, int64)){
+    char biner1[64], biner2[64];
     printf("Masukkan biner 1: ");
-    scanf("%lld", &biner1);
+    scanf("%s", biner1);
     printf("Masukkan biner 2: ");
-    scanf("%lld", &biner2);
+    scanf("%s", biner2);
 
-    long int des1 = binerToDesimal(biner1);
-    long int des2 = binerToDesimal(biner2);
+    int64 des1 = binerToDesimal(biner1);
+    int64 des2 = binerToDesimal(biner2);
 
     return operasi(des1, des2);
 }
 
-int aroktal(llint (*operasi)(llint, llint)){
-    llint oktal1, oktal2;
+int64 aroktal(int64 (*operasi)(int64, int64)){
+    char oktal1[64], oktal2[64];
     printf("Masukkan oktal 1: ");
-    scanf("%lld", &oktal1);
+    scanf("%s", oktal1);
     printf("Masukkan oktal 2: ");
-    scanf("%lld", &oktal2);
+    scanf("%s", oktal2);
 
-    long int des1 = oktalToDesimal(oktal1);
-    long int des2 = oktalToDesimal(oktal2);
+    int64 des1 = oktalToDesimal(oktal1);
+    int64 des2 = oktalToDesimal(oktal2);
 
     return operasi(des1, des2);
 }
