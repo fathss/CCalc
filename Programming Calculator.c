@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -265,8 +266,8 @@ double binary(double (*operation)(double, double)){
     printf("Enter binary 2: ");
     scanf("%s", binary2);
 
-    double dec1 = strtol(binary1, NULL, 2);
-    double dec2 = strtol(binary2, NULL, 2);
+    double dec1 = baseToDecimal(binary1, 2);
+    double dec2 = baseToDecimal(binary2, 2);
 
     return operation(dec1, dec2);
 }
@@ -278,8 +279,8 @@ double octal(double (*operation)(double, double)){
     printf("Enter octal 2: ");
     scanf("%s", octal2);
 
-    double dec1 = strtol(octal1, NULL, 8);
-    double dec2 = strtol(octal2, NULL, 8);
+    double dec1 = baseToDecimal(octal1, 8);
+    double dec2 = baseToDecimal(octal2, 8);
 
     return operation(dec1, dec2);
 }
@@ -291,14 +292,14 @@ double hexadecimal(double (*operation)(double, double)){
     printf("Enter octal 2: ");
     scanf("%s", hex2);
 
-    double dec1 = strtol(hex1, NULL, 16);
-    double dec2 = strtol(hex2, NULL, 16);
+    double dec1 = baseToDecimal(hex1, 16);
+    double dec2 = baseToDecimal(hex2, 16);
 
     return operation(dec1, dec2);
 }
 
 double differentTypes(double (*operation)(double, double)) {
-    char input1[32], input2[32];
+    char input[32];
     double dec1, dec2;
     puts("CAUTION!\nFOLLOW THE RULES BELOW");
     puts("Binary Prefix   : 0b || 0B");
@@ -307,37 +308,37 @@ double differentTypes(double (*operation)(double, double)) {
     puts("Decimal Prefix  : No prefix");
 
     printf("Enter input 1: ");
-    scanf("%s", input1);
-    char *input1ptr = input1;
+    scanf("%s", input);
+    char *ptr = input;
 
-    if (strncmp(input1, "0b", 2) == 0 || strncmp(input1, "0B", 2) == 0){
-        input1ptr += 2;
-        dec1 = strtol(input1ptr, NULL, 2); // Binary
-    } else if (strncmp(input1, "0x", 2) == 0 || strncmp(input1, "0X", 2) == 0){
-        input1ptr += 2;
-        dec1 = strtol(input1ptr, NULL, 16); // Hexadecimal
-    } else if (input1[0] == '0'){
-        input1ptr++;
-        dec1 = strtol(input1ptr, NULL, 8); // Octal
+    if (strncmp(input, "0b", 2) == 0 || strncmp(input, "0B", 2) == 0){
+        ptr += 2;
+        dec1 = baseToDecimal(ptr, 2); // Binary
+    } else if (strncmp(input, "0x", 2) == 0 || strncmp(input, "0X", 2) == 0){
+        ptr += 2;
+        dec1 = baseToDecimal(ptr, 16); // Hexadecimal
+    } else if (input[0] == '0'){
+        ptr++;
+        dec1 = baseToDecimal(ptr, 8); // Octal
     } else{
-        dec1 = strtol(input1ptr, NULL, 10); // Decimal
+        dec1 = strtod(ptr, NULL); // Decimal
     }
 
     printf("Enter input 2: ");
-    scanf("%s", input2);
-    char *input2ptr = input2;
+    scanf("%s", input);
+    ptr = input;
 
-    if (strncmp(input2, "0b", 2) == 0 || strncmp(input2, "0B", 2) == 0){
-        input2ptr += 2;
-        dec2 = strtol(input2ptr, NULL, 2);
-    } else if (strncmp(input2, "0x", 2) == 0 || strncmp(input2, "0X", 2) == 0){
-        input2ptr += 2;
-        dec2 = strtol(input2ptr, NULL, 16);
-    } else if (input2[0] == '0'){
-        input2ptr++;
-        dec2 = strtol(input2ptr, NULL, 8);
+    if (strncmp(input, "0b", 2) == 0 || strncmp(input, "0B", 2) == 0){
+        ptr += 2;
+        dec2 = baseToDecimal(ptr, 2); // Binary
+    } else if (strncmp(input, "0x", 2) == 0 || strncmp(input, "0X", 2) == 0){
+        ptr += 2;
+        dec2 = baseToDecimal(ptr, 16); // Hexadecimal
+    } else if (input[0] == '0'){
+        ptr++;
+        dec2 = baseToDecimal(ptr, 8); // Octal
     } else{
-        dec2 = strtol(input2ptr, NULL, 10);
+        dec2 = strtod(ptr, NULL); // Decimal
     }
 
     return operation(dec1, dec2);
@@ -451,7 +452,7 @@ void decimalToBase(double x, int base){
     char intResult[65], floatResult[65];
     char digits[] = "0123456789ABCDEF";
     int index = 0;
-    long intPart = (long)x;
+    unsigned long long intPart = (unsigned long long)x;
     double floatPart = x - intPart;
 
     if (intPart == 0) {
@@ -467,7 +468,7 @@ void decimalToBase(double x, int base){
     intResult[index] = '\0';
 
     for (int i = index-1; i >= 0; i--){
-        putchar(intResult[i]);
+        printf("%c", intResult[i]);
     }
 
     // Check if decimal part exists
@@ -486,7 +487,7 @@ void decimalToBase(double x, int base){
 
         printf(".");
         for (int i = 0; i < index; i++){
-            putchar(floatResult[i]);
+            printf("%c", floatResult[i]);
         }
     }
 }
