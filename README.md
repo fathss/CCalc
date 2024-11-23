@@ -12,7 +12,7 @@ Limitations:
 3. 0 - 16 Digits of decimal (2^53 - 1)
 4. 0 - 13 Digits of hex
 
-Beyond the limitation, the value represented will be less precise
+Beyond the limitation, the value represented will be less accurate
    
 Warning!<br>
 This code does not have any valid input check. <br>
