@@ -4,4 +4,4 @@ This branch will focus solely on fixing bugs, checking valid inputs, and handlin
 Once it is ready it'll be merged into the main branch
 
 Problems to be fixed:
-1. Cannot handle division from different type of base
+1. Cannot handle division from different types of bases with decimal.point
