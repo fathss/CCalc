@@ -1,7 +1,3 @@
-# programming-calculator
-A small project in C that i create
-
-Feature:
-1. Arithmetic Operations
-2. Base Conversion
-3. Decimal Point Conversion
+# Fixing
+This branch will focus solely on fixing bugs, checking valid inputs, and handling unexpected errors
+Once it is ready it'll be merged into the main branch
