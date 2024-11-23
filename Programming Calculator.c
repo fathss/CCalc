@@ -265,8 +265,8 @@ double binary(double (*operation)(double, double)){
     printf("Enter binary 2: ");
     scanf("%s", binary2);
 
-    double dec1 = baseToDecimal(biner1, 2);
-    double dec2 = baseToDecimal(biner2, 2);
+    double dec1 = baseToDecimal(binary1, 2);
+    double dec2 = baseToDecimal(binary2, 2);
 
     return operation(dec1, dec2);
 }
@@ -297,7 +297,7 @@ double hexadecimal(double (*operation)(double, double)){
     return operation(dec1, dec2);
 }
 
-double differentType(double (*operation)(double, double)) {
+double differentTypes(double (*operation)(double, double)) {
     char input[32];
     double dec1, dec2;
     puts("CAUTION!\nFOLLOW THE RULES BELOW");
@@ -343,7 +343,7 @@ double differentType(double (*operation)(double, double)) {
     return operation(dec1, dec2);
 }
 
-void convert(){
+void conversion(){
     int choice;
     char decimal[32], binary[32], octal[32], hexadecimal[32];
     double dec;
@@ -405,7 +405,7 @@ void convert(){
             break;
         default:
             puts("Invalid input, try again\n");
-            convert();
+            conversion();
             break;
     }
 }
@@ -467,7 +467,7 @@ void decimalToBase(double x, int base){
     intResult[index] = '\0';
 
     for (int i = index-1; i >= 0; i--){
-        printf("%d", intResult[i]);
+        printf("%c", intResult[i]);
     }
 
     // Check if decimal part exists
@@ -486,8 +486,7 @@ void decimalToBase(double x, int base){
 
         printf(".");
         for (int i = 0; i < index; i++){
-            printf("%d", floatResult[i]);
+            printf("%c", floatResult[i]);
         }
     }
 }
-
