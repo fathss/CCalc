@@ -329,15 +329,15 @@ double differentTypes(double (*operation)(double, double)) {
 
     if (strncmp(input, "0b", 2) == 0 || strncmp(input, "0B", 2) == 0){
         ptr += 2;
-        dec1 = baseToDecimal(ptr, 2); // Binary
+        dec2 = baseToDecimal(ptr, 2); // Binary
     } else if (strncmp(input, "0x", 2) == 0 || strncmp(input, "0X", 2) == 0){
         ptr += 2;
-        dec1 = baseToDecimal(ptr, 16); // Hexadecimal
+        dec2 = baseToDecimal(ptr, 16); // Hexadecimal
     } else if (input[0] == '0'){
         ptr++;
-        dec1 = baseToDecimal(ptr, 8); // Octal
+        dec2 = baseToDecimal(ptr, 8); // Octal
     } else{
-        dec1 = strtod(ptr, NULL); // Decimal
+        dec2 = strtod(ptr, NULL); // Decimal
     }
 
     return operation(dec1, dec2);
@@ -451,7 +451,7 @@ void decimalToBase(double x, int base){
     char intResult[65], floatResult[65];
     char digits[] = "0123456789ABCDEF";
     int index = 0;
-    long intPart = (long)x;
+    unsigned long long intPart = (unsigned long long)x;
     double floatPart = x - intPart;
 
     if (intPart == 0) {
