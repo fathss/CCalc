@@ -280,6 +280,7 @@ void programming(){
 }
 
 void conversion(){
+
     double dec;
     while(1){
         char input[64];
@@ -537,7 +538,7 @@ int validBase(char *x, int base){
     {
         case 2:
             for (char *i = x; *i != '\0'; i++){
-                if (isdigit(*i) && *i >= '0' && *i <= '1'){
+                if (isdigit(*i) && *i >= '0' && *i <= '1' || *i == '.'){
                     continue;
                 } else{
                     return 0;
@@ -547,7 +548,7 @@ int validBase(char *x, int base){
 
         case 8:
             for (char *i = x; *i != '\0'; i++){
-                if (isdigit(*i) && *i >= '0' && *i <= '7'){
+                if (isdigit(*i) && *i >= '0' && *i <= '7' || *i == '.'){
                     continue;
                 } else{
                     return 0;
@@ -567,7 +568,7 @@ int validBase(char *x, int base){
 
         case 16:
             for (char *i = x; *i != '\0'; i++){
-                if (*i >= '0' && *i <= '9' || *i >= 'A' && *i <= 'F'){
+                if (*i >= '0' && *i <= '9' || *i >= 'A' && *i <= 'F' || *i == '.'){
                     continue;
                 } else{
                     return 0;
