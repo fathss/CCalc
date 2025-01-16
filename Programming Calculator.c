@@ -280,7 +280,6 @@ void programming(){
 }
 
 void conversion(){
-
     double dec;
     while(1){
         char input[64];
