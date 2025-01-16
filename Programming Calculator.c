@@ -34,9 +34,8 @@ int main (){
             printf("Invalid input: %s is not a valid number, try again\n\n", input);
             continue;
         }
-        else{
-            choice = atoi(input);
-        }
+        
+        choice = atoi(input);
 
         switch (choice)
         {
@@ -84,9 +83,7 @@ void arithmetic(){
             printf("Invalid input: %s is not a valid number, try again\n\n", input);
             continue;
         }
-        else{
-            choice = atoi(input);
-        }
+        choice = atoi(input);
 
         if (choice == 1){
             mathematics();
@@ -163,9 +160,7 @@ void programming(){
         if (!validBase(input, 10)){
             printf("Invalid input: %s is not a valid number, try again\n\n", input);
         }
-        else{
-            choice = atoi(input);
-        }
+        choice = atoi(input);
 
         if (choice < 1 || choice > 4){
             printf("Invalid input: input out of range, try again\n\n");
@@ -184,9 +179,9 @@ void programming(){
             printf("Invalid input: %s is not a valid number, try again\n\n", input);
             continue;
         }
-        else{
-            operation = atoi(input);
-        }
+        
+        operation = atoi(input);
+        
 
         if (operation < 1 || operation > 4){
             printf("Invalid input: input out of range, try again\n\n");
@@ -299,9 +294,8 @@ void conversion(){
             printf("Invalid input: %s is not a valid number, try again\n\n", input);
             continue;
         }
-        else{
-            choice = atoi(input);
-        }
+        
+        choice = atoi(input);
 
         if(choice < 1 || choice > 4){
             printf("Invalid input: input out of range, try again\n\n");
