@@ -8,7 +8,6 @@
 #include "base_utils.h"
 #include "error_handling.h"
 
-// Function Prototypes
 void display();
 
 int main()
