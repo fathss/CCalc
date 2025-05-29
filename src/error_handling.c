@@ -2,8 +2,10 @@
 #include <string.h>
 #include "error_handling.h"
 
+// A global error message that can be used to store the error message based on the error type.
 char error_message[50];
 
+// Error handling function to set the global error message based on the error type.
 void error(ErrorType error_type)
 {
     switch (error_type)

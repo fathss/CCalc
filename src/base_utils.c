@@ -6,46 +6,46 @@
 #include "base_utils.h"
 #include "error_handling.h"
 
-// Checking what base from input
+// Checking the base of the input from prefix and converting it to decimal
 double base_check(char *input)
 {
     // Binary type check
     if (strncmp(input, "0b", 2) == 0 || strncmp(input, "0B", 2) == 0)
     {
         input += 2;
-        if (!valid_input(input, 2))
+        if (!valid_base(input, 2))
         {
             error(INVALID_BINARY);
             return -1;
         }
-        return input_to_decimal(input, 2);
+        return base_to_decimal(input, 2);
     }
-    // Heinputadecimal type check
-    else if (strncmp(input, "0input", 2) == 0 || strncmp(input, "0input", 2) == 0)
+    // Hex type check
+    else if (strncmp(input, "0x", 2) == 0 || strncmp(input, "0X", 2) == 0)
     {
         input += 2;
-        if (!valid_input(input, 16))
+        if (!valid_base(input, 16))
         {
             error(INVALID_HEX);
             return -1;
         }
-        return input_to_decimal(input, 16);
+        return base_to_decimal(input, 16);
     }
     // Octal type check
     else if (input[0] == '0')
     {
         input++;
-        if (!valid_input(input, 8))
+        if (!valid_base(input, 8))
         {
             error(INVALID_OCTAL);
             return -1;
         }
-        return input_to_decimal(input, 8);
+        return base_to_decimal(input, 8);
     }
     // Decimal type check
     else if (input[0] >= '0' && input[0] <= '9')
     {
-        if (!valid_input(input, 10))
+        if (!valid_base(input, 10))
         {
             error(INVALID_DECIMAL);
             return -1;
@@ -60,7 +60,7 @@ double base_check(char *input)
     }
 }
 
-// Checking if the base input is valid
+// Check if the input is valid for the specified base
 int valid_base(char *input, int base)
 {
     switch (base)
@@ -273,7 +273,7 @@ double different_types(double (*operation)(double, double))
     return operation(dec1, dec2);
 }
 
-// Convert other base to decimal
+// Convert other base to decimal. Returns decimal value
 double base_to_decimal(char *input, int base)
 {
     double dec = 0.0, fraction = 0.0;
@@ -322,7 +322,7 @@ double base_to_decimal(char *input, int base)
     return dec;
 }
 
-// Convert decimal to other base
+// Convert decimal to other base. Prints the result in the specified base
 void decimal_to_base(double input_decimal, int base)
 {
     char intResult[65], floatResult[65];
