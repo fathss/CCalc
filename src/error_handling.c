@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+#include "base_utils.h"
 #include "error_handling.h"
 
 // A global error message that can be used to store the error message based on the error type.
