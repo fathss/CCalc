@@ -14,5 +14,6 @@ A small project in C that i create
 
 Beyond the limitation, the value represented will be less accurate
    
-## Warning!
-This code isn't fully free of bugs <br>
+## Notes
+- This code isn't fully free of bugs <br>
+- This code is still a mess of switches and ifs
