@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "arithmetic.h"
-#include "base_utils.h"
 #include "math_interface.h"
 #include "prog_interface.h"
+#include "base_utils.h"
 #include "error_handling.h"
 
 void arithmetic()
