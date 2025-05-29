@@ -17,7 +17,8 @@ int main()
     while (1)
     {
         display();
-        scanf("%s", input);
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = '\0';
 
         if (!validBase(input, 10))
         {

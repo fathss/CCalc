@@ -6,11 +6,11 @@
 #include "base_utils.h"
 #include "error_handling.h"
 
+char input[64];
+int choice;
+
 void arithmetic()
 {
-    char input[64];
-    int choice;
-
     while (1)
     {
         puts("\nA R I T H M E T I C");
@@ -19,7 +19,8 @@ void arithmetic()
         puts("2. Programming");
         puts("3. Back");
         printf(">>>> ");
-        scanf("%s", input);
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = '\0';
 
         if (!validBase(input, 10))
         {
@@ -27,6 +28,7 @@ void arithmetic()
             printf("Invalid input : %s\n", errorMessage);
             continue;
         }
+
         choice = atoi(input);
 
         if (choice == 1)
@@ -105,8 +107,6 @@ void progInterface()
 {
     double result;
     int choiceRepeat = 1;
-    int choice;
-    char input[64];
 
     while (1)
     {
