@@ -2,12 +2,12 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "build and run in new cmd window",
+			"label": "build with PowerShell",
 			"type": "shell",
-			"command": "cmd.exe",
+			"command": "powershell",
 			"args": [
-				"/c",
-				"gcc src\\main.c -o build\\main.exe && start cmd /k build\\main.exe"
+				"-Command",
+				"gcc -Iinclude src/*.c -o build/main.exe; Start-Process build/main.exe"
 			],
 			"group": {
 				"kind": "build",
