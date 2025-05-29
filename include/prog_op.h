@@ -7,6 +7,4 @@ double octal(double (*operation)(double, double));
 double hexadecimal(double (*operation)(double, double));
 double different_types(double (*operation)(double, double));
 
-// Operations
-
 #endif
