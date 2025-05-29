@@ -8,7 +8,6 @@
 #include "prog_op.h"
 #include "error_handling.h"
 
-int getValidatedChoice(const char *prompt, int min, int max);
 void arithmetic();
 void conversion();
 void mathInterface();
@@ -24,7 +23,7 @@ int main()
     while (repeat)
     {
         main_display();
-        choice = getValidatedChoice(">>>> ", 1, 3);
+        choice = get_validated_choice(">>>> ", 1, 3);
 
         switch (choice)
         {
@@ -48,32 +47,6 @@ int main()
     return 0;
 }
 
-int getValidatedChoice(const char *prompt, int min, int max)
-{
-    char input[64];
-    int choice;
-    while (1)
-    {
-        printf("%s", prompt);
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-        if (!valid_base(input, 10))
-        {
-            error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-        choice = atoi(input);
-        if (choice < min || choice > max)
-        {
-            error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-        return choice;
-    }
-}
-
 void arithmetic()
 {
     int repeat = 1;
@@ -81,7 +54,7 @@ void arithmetic()
     while (repeat)
     {
         arithmetic_display();
-        choice = getValidatedChoice(">>>> ", 1, 3);
+        choice = get_validated_choice(">>>> ", 1, 3);
 
         switch (choice)
         {
@@ -107,7 +80,7 @@ void conversion()
     while (1)
     {
         conversion_display();
-        choice = getValidatedChoice(">>>> ", 1, 5);
+        choice = get_validated_choice(">>>> ", 1, 5);
 
         switch (choice)
         {
@@ -199,13 +172,13 @@ void progInterface()
     {
         puts("");
         prog_interface_display_choice();
-        choice = getValidatedChoice(">>>> ", 1, 5);
+        choice = get_validated_choice(">>>> ", 1, 5);
 
         if (choice == 5)
             return;
 
         prog_interface_display_op();
-        operation = getValidatedChoice(">>>> ", 1, 5);
+        operation = get_validated_choice(">>>> ", 1, 5);
 
         if (operation == 5)
             continue;
