@@ -7,50 +7,50 @@
 #include "error_handling.h"
 
 // Checking what base from input
-double baseCheck(char *x)
+double base_check(char *input)
 {
     // Binary type check
-    if (strncmp(x, "0b", 2) == 0 || strncmp(x, "0B", 2) == 0)
+    if (strncmp(input, "0b", 2) == 0 || strncmp(input, "0B", 2) == 0)
     {
-        x += 2;
-        if (!validBase(x, 2))
+        input += 2;
+        if (!valid_input(input, 2))
         {
             error(INVALID_BINARY);
             return -1;
         }
-        return baseToDecimal(x, 2);
+        return input_to_decimal(input, 2);
     }
-    // Hexadecimal type check
-    else if (strncmp(x, "0x", 2) == 0 || strncmp(x, "0X", 2) == 0)
+    // Heinputadecimal type check
+    else if (strncmp(input, "0input", 2) == 0 || strncmp(input, "0input", 2) == 0)
     {
-        x += 2;
-        if (!validBase(x, 16))
+        input += 2;
+        if (!valid_input(input, 16))
         {
             error(INVALID_HEX);
             return -1;
         }
-        return baseToDecimal(x, 16);
+        return input_to_decimal(input, 16);
     }
     // Octal type check
-    else if (x[0] == '0')
+    else if (input[0] == '0')
     {
-        x++;
-        if (!validBase(x, 8))
+        input++;
+        if (!valid_input(input, 8))
         {
             error(INVALID_OCTAL);
             return -1;
         }
-        return baseToDecimal(x, 8);
+        return input_to_decimal(input, 8);
     }
     // Decimal type check
-    else if (x[0] >= '0' && x[0] <= '9')
+    else if (input[0] >= '0' && input[0] <= '9')
     {
-        if (!validBase(x, 10))
+        if (!valid_input(input, 10))
         {
             error(INVALID_DECIMAL);
             return -1;
         };
-        return strtod(x, NULL);
+        return strtod(input, NULL);
     }
     // Prefix error
     else
@@ -61,12 +61,12 @@ double baseCheck(char *x)
 }
 
 // Checking if the base input is valid
-int validBase(char *x, int base)
+int valid_base(char *input, int base)
 {
     switch (base)
     {
     case 2:
-        for (char *i = x; *i != '\0'; i++)
+        for (char *i = input; *i != '\0'; i++)
         {
             if (isdigit(*i) && *i >= '0' && *i <= '1' || *i == '.')
             {
@@ -80,7 +80,7 @@ int validBase(char *x, int base)
         break;
 
     case 8:
-        for (char *i = x; *i != '\0'; i++)
+        for (char *i = input; *i != '\0'; i++)
         {
             if (isdigit(*i) && *i >= '0' && *i <= '7' || *i == '.')
             {
@@ -94,7 +94,7 @@ int validBase(char *x, int base)
         break;
 
     case 10:
-        for (char *i = x; *i != '\0'; i++)
+        for (char *i = input; *i != '\0'; i++)
         {
             if (isdigit(*i) || *i == '.')
             {
@@ -108,7 +108,7 @@ int validBase(char *x, int base)
         break;
 
     case 16:
-        for (char *i = x; *i != '\0'; i++)
+        for (char *i = input; *i != '\0'; i++)
         {
             if (*i >= '0' && *i <= '9' || *i >= 'A' && *i <= 'F' || *i == '.')
             {
@@ -133,27 +133,27 @@ double binary(double (*operation)(double, double))
         printf("\nEnter binary 1: ");
         scanf("%s", binary1);
 
-        if (!validBase(binary1, 2))
+        if (!valid_base(binary1, 2))
         {
             error(INVALID_BINARY);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             continue;
         }
 
         printf("Enter binary 2: ");
         scanf("%s", binary2);
 
-        if (!validBase(binary2, 2))
+        if (!valid_base(binary2, 2))
         {
             error(INVALID_BINARY);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             continue;
         }
         break;
     }
 
-    double dec1 = baseToDecimal(binary1, 2);
-    double dec2 = baseToDecimal(binary2, 2);
+    double dec1 = base_to_decimal(binary1, 2);
+    double dec2 = base_to_decimal(binary2, 2);
 
     return operation(dec1, dec2);
 }
@@ -167,27 +167,27 @@ double octal(double (*operation)(double, double))
         printf("\nEnter octal 1: ");
         scanf("%s", octal1);
 
-        if (!validBase(octal1, 8))
+        if (!valid_base(octal1, 8))
         {
             error(INVALID_OCTAL);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             continue;
         }
 
         printf("Enter octal 2: ");
         scanf("%s", octal2);
 
-        if (!validBase(octal2, 8))
+        if (!valid_base(octal2, 8))
         {
             error(INVALID_OCTAL);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             continue;
         }
         break;
     }
 
-    double dec1 = baseToDecimal(octal1, 8);
-    double dec2 = baseToDecimal(octal2, 8);
+    double dec1 = base_to_decimal(octal1, 8);
+    double dec2 = base_to_decimal(octal2, 8);
 
     return operation(dec1, dec2);
 }
@@ -201,32 +201,32 @@ double hexadecimal(double (*operation)(double, double))
         printf("\nEnter hex 1: ");
         scanf("%s", hex1);
 
-        if (!validBase(hex1, 16))
+        if (!valid_base(hex1, 16))
         {
             error(INVALID_HEX);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             continue;
         }
 
         printf("Enter hex 2: ");
         scanf("%s", hex2);
 
-        if (!validBase(hex2, 16))
+        if (!valid_base(hex2, 16))
         {
             error(INVALID_HEX);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             continue;
         }
         break;
     }
 
-    double dec1 = baseToDecimal(hex1, 16);
-    double dec2 = baseToDecimal(hex2, 16);
+    double dec1 = base_to_decimal(hex1, 16);
+    double dec2 = base_to_decimal(hex2, 16);
 
     return operation(dec1, dec2);
 }
 
-double differentTypes(double (*operation)(double, double))
+double different_types(double (*operation)(double, double))
 {
     char input[32], errorMsg[32];
     double dec1, dec2;
@@ -249,10 +249,10 @@ double differentTypes(double (*operation)(double, double))
         printf("\nEnter input 1: ");
         scanf("%s", input);
 
-        dec1 = baseCheck(input);
+        dec1 = base_check(input);
         if (dec1 < 0)
         {
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             retryMenu++;
             continue;
         }
@@ -260,7 +260,7 @@ double differentTypes(double (*operation)(double, double))
         printf("Enter input 2: ");
         scanf("%s", input);
 
-        dec2 = baseCheck(input);
+        dec2 = base_check(input);
         if (dec2 < 0)
         {
             printf("Invalid input: %s\n");
@@ -274,28 +274,28 @@ double differentTypes(double (*operation)(double, double))
 }
 
 // Convert other base to decimal
-double baseToDecimal(char *x, int base)
+double base_to_decimal(char *input, int base)
 {
     double dec = 0.0, fraction = 0.0;
-    char *dot = strstr(x, ".");
+    char *dot = strstr(input, ".");
 
     if (!dot)
     {
-        dot = x + strlen(x);
+        dot = input + strlen(input);
     }
 
     // Integer part
-    int index = dot - x - 1;
+    int index = dot - input - 1;
     int value;
-    for (int i = 0; *(x + i) != '.' && *(x + i) != '\0'; i++)
+    for (int i = 0; *(input + i) != '.' && *(input + i) != '\0'; i++)
     {
-        if (*(x + i) > '9')
+        if (*(input + i) > '9')
         {
-            value = *(x + i) - 55;
+            value = *(input + i) - 55;
         }
         else
         {
-            value = *(x + i) - '0';
+            value = *(input + i) - '0';
         }
         dec += value * pow(base, index - i);
     }
@@ -323,13 +323,13 @@ double baseToDecimal(char *x, int base)
 }
 
 // Convert decimal to other base
-void decimalToBase(double x, int base)
+void decimal_to_base(double input_decimal, int base)
 {
     char intResult[65], floatResult[65];
     char digits[] = "0123456789ABCDEF";
     int index = 0;
-    unsigned long long intPart = (unsigned long long)x;
-    double floatPart = x - intPart;
+    unsigned long long intPart = (unsigned long long)input_decimal;
+    double floatPart = input_decimal - intPart;
 
     if (intPart == 0)
     {

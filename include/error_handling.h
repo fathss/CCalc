@@ -14,8 +14,8 @@ typedef enum
     INVALID_DECIMAL
 } ErrorType;
 
-void error(ErrorType errorType);
+void error(ErrorType error_type);
 
-extern char errorMessage[50];
+extern char error_message[50];
 
 #endif

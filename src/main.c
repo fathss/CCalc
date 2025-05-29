@@ -22,10 +22,10 @@ int main()
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\n")] = '\0';
 
-        if (!validBase(input, 10))
+        if (!valid_base(input, 10))
         {
             error(INVALID_NUMBER);
-            printf("Invalid input : %s\n", errorMessage);
+            printf("Invalid input : %s\n", error_message);
             continue;
         }
 
@@ -44,7 +44,7 @@ int main()
             return 0;
         default:
             error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
             break;
         }
     }
@@ -75,10 +75,10 @@ void arithmetic()
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\n")] = '\0';
 
-        if (!validBase(input, 10))
+        if (!valid_base(input, 10))
         {
             error(INVALID_NUMBER);
-            printf("Invalid input : %s\n", errorMessage);
+            printf("Invalid input : %s\n", error_message);
             continue;
         }
 
@@ -99,7 +99,7 @@ void arithmetic()
         else
         {
             error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n", errorMessage);
+            printf("Invalid input: %s\n", error_message);
         }
     }
 }
@@ -114,7 +114,7 @@ void mathInterface()
         printf("Enter numbers and operation (num1) (operator) (num2): ");
         scanf("%s %c %s", &input1, &op, &input2);
 
-        if (validBase(input1, 10) && validBase(input2, 10))
+        if (valid_base(input1, 10) && valid_base(input2, 10))
         {
             num1 = strtod(input1, NULL);
             num2 = strtod(input2, NULL);
@@ -122,7 +122,7 @@ void mathInterface()
         else
         {
             error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", errorMessage);
+            printf("Invalid input: %s\n\n", error_message);
             continue;
         }
         switch (op)
@@ -140,14 +140,14 @@ void mathInterface()
             if (num2 == 0)
             {
                 error(DIVISION_BY_ZERO);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
             result = divide(num1, num2);
             break;
         default:
             error(INVALID_OPERATOR);
-            printf("Invalid input: %s\n\n", errorMessage);
+            printf("Invalid input: %s\n\n", error_message);
             continue;
         }
 
@@ -173,10 +173,10 @@ void progInterface()
             printf(">>>> ");
             scanf("%s", input);
 
-            if (!validBase(input, 10))
+            if (!valid_base(input, 10))
             {
                 error(INVALID_NUMBER);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
             choice = atoi(input);
@@ -184,7 +184,7 @@ void progInterface()
             if (choice < 1 || choice > 5)
             {
                 error(INPUT_OUT_OF_RANGE);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
             choiceRepeat = 0;
@@ -204,10 +204,10 @@ void progInterface()
         printf(">>>> ");
         scanf("%s", input);
 
-        if (!validBase(input, 10))
+        if (!valid_base(input, 10))
         {
             error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", errorMessage);
+            printf("Invalid input: %s\n\n", error_message);
             continue;
         }
 
@@ -216,7 +216,7 @@ void progInterface()
         if (operation < 1 || operation > 5)
         {
             error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n\n", errorMessage);
+            printf("Invalid input: %s\n\n", error_message);
             continue;
         }
 
@@ -285,16 +285,16 @@ void progInterface()
             switch (operation)
             {
             case 1:
-                result = differentTypes(add);
+                result = different_types(add);
                 break;
             case 2:
-                result = differentTypes(subtract);
+                result = different_types(subtract);
                 break;
             case 3:
-                result = differentTypes(multiply);
+                result = different_types(multiply);
                 break;
             case 4:
-                result = differentTypes(divide);
+                result = different_types(divide);
                 break;
             }
             break;
@@ -303,12 +303,12 @@ void progInterface()
         if (result < 0)
             continue;
         printf("\nBinary       : ");
-        decimalToBase(result, 2);
+        decimal_to_base(result, 2);
         printf("\nDecimal      : %g", result);
         printf("\nOctal        : ");
-        decimalToBase(result, 8);
+        decimal_to_base(result, 8);
         printf("\nHexadecimal  : ");
-        decimalToBase(result, 16);
+        decimal_to_base(result, 16);
         printf("\n");
         choiceRepeat = 1;
     }
@@ -332,10 +332,10 @@ void conversion()
         printf(">>>> ");
         scanf("%s", input);
 
-        if (!validBase(input, 10))
+        if (!valid_base(input, 10))
         {
             error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", errorMessage);
+            printf("Invalid input: %s\n\n", error_message);
             continue;
         }
 
@@ -344,7 +344,7 @@ void conversion()
         if (choice < 1 || choice > 5)
         {
             error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n\n", errorMessage);
+            printf("Invalid input: %s\n\n", error_message);
             continue;
         }
 
@@ -358,20 +358,20 @@ void conversion()
             printf("Enter decimal : ");
             scanf("%s", decimal);
 
-            if (!validBase(decimal, 10))
+            if (!valid_base(decimal, 10))
             {
                 error(INVALID_DECIMAL);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
 
             dec = strtod(decimal, NULL);
             printf("Binary        : ");
-            decimalToBase(dec, 2);
+            decimal_to_base(dec, 2);
             printf("\nOctal         : ");
-            decimalToBase(dec, 8);
+            decimal_to_base(dec, 8);
             printf("\nHexadecimal   : ");
-            decimalToBase(dec, 16);
+            decimal_to_base(dec, 16);
             puts("\n");
             continue;
         }
@@ -380,19 +380,18 @@ void conversion()
             printf("Enter binary  : ");
             scanf("%s", binary);
 
-            if (!validBase(binary, 2))
+            if (!valid_base(binary, 2))
             {
                 error(INVALID_BINARY);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
-
-            dec = baseToDecimal(binary, 2);
+            dec = base_to_decimal(binary, 2);
             printf("Decimal       : %g", dec);
             printf("\nOctal         : ");
-            decimalToBase(dec, 8);
+            decimal_to_base(dec, 8);
             printf("\nHexadecimal   : ");
-            decimalToBase(dec, 16);
+            decimal_to_base(dec, 16);
             puts("\n");
             continue;
         }
@@ -401,19 +400,19 @@ void conversion()
             printf("Enter octal : ");
             scanf("%s", octal);
 
-            if (!validBase(octal, 8))
+            if (!valid_base(octal, 8))
             {
                 error(INVALID_OCTAL);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
 
-            dec = baseToDecimal(octal, 8);
+            dec = base_to_decimal(octal, 8);
             printf("Decimal       : %g", dec);
             printf("\nBinary        : ");
-            decimalToBase(dec, 2);
+            decimal_to_base(dec, 2);
             printf("\nHexadecimal   : ");
-            decimalToBase(dec, 16);
+            decimal_to_base(dec, 16);
             puts("\n");
             continue;
         }
@@ -422,19 +421,19 @@ void conversion()
             printf("Enter Hexadecimal : ");
             scanf("%s", hexadecimal);
 
-            if (!validBase(hexadecimal, 16))
+            if (!valid_base(hexadecimal, 16))
             {
                 error(INVALID_HEX);
-                printf("Invalid input: %s\n\n", errorMessage);
+                printf("Invalid input: %s\n\n", error_message);
                 continue;
             }
 
-            dec = baseToDecimal(hexadecimal, 16);
+            dec = base_to_decimal(hexadecimal, 16);
             printf("Decimal       : %g", dec);
             printf("\nBinary        : ");
-            decimalToBase(dec, 2);
+            decimal_to_base(dec, 2);
             printf("\nOctal         : ");
-            decimalToBase(dec, 8);
+            decimal_to_base(dec, 8);
             puts("\n");
             continue;
         }
