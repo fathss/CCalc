@@ -7,6 +7,7 @@
 #include "prog_op.h"
 #include "error_handling.h"
 
+int getValidatedChoice(const char *prompt, int min, int max);
 void arithmetic();
 void conversion();
 void mathInterface();
@@ -22,18 +23,7 @@ int main()
     while (repeat)
     {
         main_display();
-        printf(">>>> ");
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-
-        if (!valid_base(input, 10))
-        {
-            error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-
-        choice = atoi(input);
+        choice = getValidatedChoice(">>>> ", 1, 3);
 
         switch (choice)
         {
@@ -57,6 +47,32 @@ int main()
     return 0;
 }
 
+int getValidatedChoice(const char *prompt, int min, int max)
+{
+    char input[64];
+    int choice;
+    while (1)
+    {
+        printf("%s", prompt);
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = '\0';
+        if (!valid_base(input, 10))
+        {
+            error(INVALID_NUMBER);
+            printf("Invalid input: %s\n\n", error_message);
+            continue;
+        }
+        choice = atoi(input);
+        if (choice < min || choice > max)
+        {
+            error(INPUT_OUT_OF_RANGE);
+            printf("Invalid input: %s\n\n", error_message);
+            continue;
+        }
+        return choice;
+    }
+}
+
 void arithmetic()
 {
     int repeat = 1;
@@ -64,18 +80,7 @@ void arithmetic()
     while (repeat)
     {
         arithmetic_display();
-        printf(">>>> ");
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-
-        if (!valid_base(input, 10))
-        {
-            error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-
-        choice = atoi(input);
+        choice = getValidatedChoice(">>>> ", 1, 3);
 
         switch (choice)
         {
@@ -104,18 +109,7 @@ void conversion()
         char decimal[32], binary[32], octal[32], hexadecimal[32];
 
         conversion_display();
-        printf(">>>> ");
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
-
-        if (!valid_base(input, 10))
-        {
-            error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-
-        choice = atoi(input);
+        choice = getValidatedChoice(">>>> ", 1, 5);
 
         switch (choice)
         {
@@ -275,49 +269,15 @@ void progInterface()
     {
         puts("");
         prog_interface_display_choice();
-        printf(">>>> ");
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
+        choice = getValidatedChoice(">>>> ", 1, 5);
 
-        if (!valid_base(input, 10))
-        {
-            error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-
-        choice = atoi(input);
-
-        if (choice < 1 || choice > 5)
-        {
-            error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-        else if (choice == 5)
-            repeat = 0;
+        if (choice == 5)
+            return;
 
         prog_interface_display_op();
-        printf(">>>> ");
-        fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = '\0';
+        operation = getValidatedChoice(">>>> ", 1, 5);
 
-        if (!valid_base(input, 10))
-        {
-            error(INVALID_NUMBER);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-
-        operation = atoi(input);
-
-        if (operation < 1 || operation > 5)
-        {
-            error(INPUT_OUT_OF_RANGE);
-            printf("Invalid input: %s\n\n", error_message);
-            continue;
-        }
-        else if (operation == 5)
+        if (operation == 5)
             continue;
 
         result = prog_op(choice, operation);
