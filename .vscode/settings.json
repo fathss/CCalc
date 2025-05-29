@@ -3,6 +3,8 @@
         "base_utils.h": "c",
         "error_msg.h": "c",
         "stdio.h": "c",
-        "error_handling.h": "c"
+        "error_handling.h": "c",
+        "arithmetic.h": "c",
+        "string.h": "c"
     }
 }
