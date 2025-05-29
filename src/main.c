@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "mathematics.h"
 #include "interface_utils.h"
+#include "conversion_utils.h"
 #include "base_utils.h"
 #include "prog_op.h"
 #include "error_handling.h"
@@ -103,95 +104,24 @@ void arithmetic()
 
 void conversion()
 {
-    double dec;
     while (1)
     {
-        char decimal[32], binary[32], octal[32], hexadecimal[32];
-
         conversion_display();
         choice = getValidatedChoice(">>>> ", 1, 5);
 
         switch (choice)
         {
         case 1:
-            printf("Enter decimal : ");
-            scanf("%s", decimal);
-            getchar();
-
-            if (!valid_base(decimal, 10))
-            {
-                error(INVALID_DECIMAL);
-                printf("Invalid input: %s\n\n", error_message);
-                continue;
-            }
-
-            dec = strtod(decimal, NULL);
-            printf("Binary        : ");
-            decimal_to_base(dec, 2);
-            printf("\nOctal         : ");
-            decimal_to_base(dec, 8);
-            printf("\nHexadecimal   : ");
-            decimal_to_base(dec, 16);
-            puts("\n");
+            handle_decimal_input();
             continue;
         case 2:
-            printf("Enter binary  : ");
-            scanf("%s", binary);
-            getchar();
-
-            if (!valid_base(binary, 2))
-            {
-                error(INVALID_BINARY);
-                printf("Invalid input: %s\n\n", error_message);
-                continue;
-            }
-            dec = base_to_decimal(binary, 2);
-            printf("Decimal       : %g", dec);
-            printf("\nOctal         : ");
-            decimal_to_base(dec, 8);
-            printf("\nHexadecimal   : ");
-            decimal_to_base(dec, 16);
-            puts("\n");
+            handle_binary_input();
             continue;
         case 3:
-            printf("Enter octal : ");
-            scanf("%s", octal);
-            getchar();
-
-            if (!valid_base(octal, 8))
-            {
-                error(INVALID_OCTAL);
-                printf("Invalid input: %s\n\n", error_message);
-                continue;
-            }
-
-            dec = base_to_decimal(octal, 8);
-            printf("Decimal       : %g", dec);
-            printf("\nBinary        : ");
-            decimal_to_base(dec, 2);
-            printf("\nHexadecimal   : ");
-            decimal_to_base(dec, 16);
-            puts("\n");
+            handle_octal_input();
             continue;
         case 4:
-            printf("Enter Hexadecimal : ");
-            scanf("%s", hexadecimal);
-            getchar();
-
-            if (!valid_base(hexadecimal, 16))
-            {
-                error(INVALID_HEX);
-                printf("Invalid input: %s\n\n", error_message);
-                continue;
-            }
-
-            dec = base_to_decimal(hexadecimal, 16);
-            printf("Decimal       : %g", dec);
-            printf("\nBinary        : ");
-            decimal_to_base(dec, 2);
-            printf("\nOctal         : ");
-            decimal_to_base(dec, 8);
-            puts("\n");
+            handle_hexadecimal_input();
             continue;
         case 5:
             return;
