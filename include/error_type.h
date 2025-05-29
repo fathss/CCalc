@@ -1,0 +1,17 @@
+#ifndef ERROR_TYPE_H
+#define ERROR_TYPE_H
+
+typedef enum
+{
+    INVALID_PREFIX,
+    INVALID_NUMBER,
+    INVALID_OPERATOR,
+    INPUT_OUT_OF_RANGE,
+    DIVISION_BY_ZERO,
+    INVALID_BINARY,
+    INVALID_OCTAL,
+    INVALID_HEX,
+    INVALID_DECIMAL
+} ErrorType;
+
+#endif
