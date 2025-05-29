@@ -172,7 +172,8 @@ void progInterface()
             puts("4. Different types");
             puts("5. Back");
             printf(">>>> ");
-            scanf("%s", input);
+            fgets(input, sizeof(input), stdin);
+            input[strcspn(input, "\n")] = '\0';
 
             if (!valid_base(input, 10))
             {
@@ -203,7 +204,8 @@ void progInterface()
         puts("4. Division");
         puts("5. Back");
         printf(">>>> ");
-        scanf("%s", input);
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = '\0';
 
         if (!valid_base(input, 10))
         {
@@ -303,6 +305,7 @@ void progInterface()
 
         if (result < 0)
             continue;
+
         printf("\nBinary       : ");
         decimal_to_base(result, 2);
         printf("\nDecimal      : %g", result);
@@ -320,8 +323,6 @@ void conversion()
     double dec;
     while (1)
     {
-        char input[64];
-        int choice;
         char decimal[32], binary[32], octal[32], hexadecimal[32];
         puts("\nBASE CONVERSION");
         puts("----------------");
@@ -331,7 +332,8 @@ void conversion()
         puts("4. Hexadecimal");
         puts("5. Back");
         printf(">>>> ");
-        scanf("%s", input);
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = '\0';
 
         if (!valid_base(input, 10))
         {
@@ -358,6 +360,7 @@ void conversion()
         {
             printf("Enter decimal : ");
             scanf("%s", decimal);
+            getchar();
 
             if (!valid_base(decimal, 10))
             {
@@ -380,6 +383,7 @@ void conversion()
         {
             printf("Enter binary  : ");
             scanf("%s", binary);
+            getchar();
 
             if (!valid_base(binary, 2))
             {
@@ -400,6 +404,7 @@ void conversion()
         {
             printf("Enter octal : ");
             scanf("%s", octal);
+            getchar();
 
             if (!valid_base(octal, 8))
             {
@@ -421,6 +426,7 @@ void conversion()
         {
             printf("Enter Hexadecimal : ");
             scanf("%s", hexadecimal);
+            getchar();
 
             if (!valid_base(hexadecimal, 16))
             {
