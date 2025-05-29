@@ -132,6 +132,7 @@ double binary(double (*operation)(double, double))
     {
         printf("\nEnter binary 1: ");
         scanf("%s", binary1);
+        getchar();
 
         if (!valid_base(binary1, 2))
         {
@@ -142,6 +143,7 @@ double binary(double (*operation)(double, double))
 
         printf("Enter binary 2: ");
         scanf("%s", binary2);
+        getchar();
 
         if (!valid_base(binary2, 2))
         {
@@ -166,6 +168,7 @@ double octal(double (*operation)(double, double))
     {
         printf("\nEnter octal 1: ");
         scanf("%s", octal1);
+        getchar();
 
         if (!valid_base(octal1, 8))
         {
@@ -176,6 +179,7 @@ double octal(double (*operation)(double, double))
 
         printf("Enter octal 2: ");
         scanf("%s", octal2);
+        getchar();
 
         if (!valid_base(octal2, 8))
         {
@@ -200,6 +204,7 @@ double hexadecimal(double (*operation)(double, double))
     {
         printf("\nEnter hex 1: ");
         scanf("%s", hex1);
+        getchar();
 
         if (!valid_base(hex1, 16))
         {
@@ -210,6 +215,7 @@ double hexadecimal(double (*operation)(double, double))
 
         printf("Enter hex 2: ");
         scanf("%s", hex2);
+        getchar();
 
         if (!valid_base(hex2, 16))
         {
@@ -248,6 +254,7 @@ double different_types(double (*operation)(double, double))
 
         printf("\nEnter input 1: ");
         scanf("%s", input);
+        getchar();
 
         dec1 = base_check(input);
         if (dec1 < 0)
@@ -259,6 +266,7 @@ double different_types(double (*operation)(double, double))
 
         printf("Enter input 2: ");
         scanf("%s", input);
+        getchar();
 
         dec2 = base_check(input);
         if (dec2 < 0)
