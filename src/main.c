@@ -113,6 +113,7 @@ void mathInterface()
     {
         printf("Enter numbers and operation (num1) (operator) (num2): ");
         scanf("%s %c %s", &input1, &op, &input2);
+        getchar();
 
         if (valid_base(input1, 10) && valid_base(input2, 10))
         {

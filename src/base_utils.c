@@ -239,10 +239,10 @@ double different_types(double (*operation)(double, double))
         if (retryMenu == 5)
         {
             puts("\nFOLLOW THE RULES BELOW!");
-            puts("Binary Prefix   : 0b || 0B");
-            puts("Octal Prefix    : 0");
+            puts("Binary Prefix      : 0b || 0B");
+            puts("Octal Prefix       : 0");
             puts("Hexadecimal Prefix : 0x || 0X");
-            puts("Decimal Prefix  : No prefix");
+            puts("Decimal Prefix     : No prefix");
             retryMenu = 0;
         }
 
