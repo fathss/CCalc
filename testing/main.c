@@ -4,30 +4,51 @@
 #include <ctype.h>
 
 #define MAX_STACK 100
-#define MAX_STRING 1024
+#define MAX_STR 100
 
+typedef char *itemType;
+typedef struct node Tree;
 typedef struct
 {
-    int data[MAX_STACK];
+    Tree *data[MAX_STACK];
     int count;
-} IntStack;
+} Stack;
 
-typedef struct
+struct node
 {
-    char data[MAX_STACK][32];
-    int count;
-} TokenStack;
+    itemType data;
+    Tree *kiri;
+    Tree *kanan;
+};
 
-void initIntStack(IntStack *s) { s->count = 0; }
-void pushInt(IntStack *s, int val) { s->data[s->count++] = val; }
-int popInt(IntStack *s) { return s->data[--s->count]; }
-int isEmptyInt(IntStack *s) { return s->count == 0; }
+// Stack functions
+void init(Stack *s) { s->count = 0; }
 
-void initTokenStack(TokenStack *s) { s->count = 0; }
-void pushToken(TokenStack *s, const char *tok) { strcpy(s->data[s->count++], tok); }
-char *popToken(TokenStack *s) { return s->data[--s->count]; }
-char *peekToken(TokenStack *s) { return s->data[s->count - 1]; }
-int isEmptyToken(TokenStack *s) { return s->count == 0; }
+void push(Stack *s, Tree *node)
+{
+    s->data[s->count++] = node;
+}
+
+Tree *pop(Stack *s)
+{
+    return s->data[--s->count];
+}
+
+int empty(Stack *s)
+{
+    return s->count == 0;
+}
+
+Tree *peek(Stack *s)
+{
+    return s->data[s->count - 1];
+}
+
+// Operator utilities
+int isOperator(char ch)
+{
+    return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+}
 
 int precedence(char op)
 {
@@ -38,19 +59,58 @@ int precedence(char op)
     return 0;
 }
 
-int isOperator(const char *tok)
+// Tree creation
+Tree *createNode(const char *str)
 {
-    return strlen(tok) == 1 && strchr("+-*/", tok[0]);
+    Tree *node = (Tree *)malloc(sizeof(Tree));
+    node->data = strdup(str);
+    node->kiri = NULL;
+    node->kanan = NULL;
+    return node;
 }
 
-void infixToPostfix(const char *infix, TokenStack *postfix)
+// Traversals
+void preorder(Tree *root)
 {
-    TokenStack opStack;
-    initTokenStack(&opStack);
+    if (root)
+    {
+        printf("%s ", root->data);
+        preorder(root->kiri);
+        preorder(root->kanan);
+    }
+}
 
-    char token[32];
-    int i = 0, n = strlen(infix);
-    while (i < n)
+void inorder(Tree *root)
+{
+    if (root)
+    {
+        inorder(root->kiri);
+        printf("%s ", root->data);
+        inorder(root->kanan);
+    }
+}
+
+void postorder(Tree *root)
+{
+    if (root)
+    {
+        postorder(root->kiri);
+        postorder(root->kanan);
+        printf("%s ", root->data);
+    }
+}
+
+// Build expression tree from infix
+Tree *buildTreeFromInfix(const char *infix)
+{
+    Stack operators, operands;
+    init(&operators);
+    init(&operands);
+
+    int i = 0, len = strlen(infix);
+    char token[30];
+
+    while (i < len)
     {
         if (isspace(infix[i]))
         {
@@ -58,117 +118,115 @@ void infixToPostfix(const char *infix, TokenStack *postfix)
             continue;
         }
 
-        // Parse number (including negative)
-        if (isdigit(infix[i]) || (infix[i] == '-' && (i == 0 || infix[i - 1] == '(' || isspace(infix[i - 1])) && isdigit(infix[i + 1])))
+        if (isdigit(infix[i]) || infix[i] == '.')
         {
             int j = 0;
-            if (infix[i] == '-')
-                token[j++] = infix[i++];
-            while (i < n && isdigit(infix[i]))
+            while (i < len && (isdigit(infix[i]) || infix[i] == '.'))
                 token[j++] = infix[i++];
             token[j] = '\0';
-            pushToken(postfix, token);
-            continue;
+            push(&operands, createNode(token));
         }
 
-        // Parse operator or parenthesis
-        if (strchr("+-*/()", infix[i]))
+        else if (infix[i] == '(')
         {
-            token[0] = infix[i];
-            token[1] = '\0';
-            if (token[0] == '(')
+            char tmp[2] = {infix[i++], '\0'};
+            push(&operators, createNode(tmp));
+        }
+
+        else if (infix[i] == ')')
+        {
+            while (!empty(&operators) && strcmp(peek(&operators)->data, "(") != 0)
             {
-                pushToken(&opStack, token);
+                Tree *op = pop(&operators);
+                Tree *right = pop(&operands);
+                Tree *left = pop(&operands);
+                op->kiri = left;
+                op->kanan = right;
+                push(&operands, op);
             }
-            else if (token[0] == ')')
-            {
-                while (!isEmptyToken(&opStack) && peekToken(&opStack)[0] != '(')
-                {
-                    pushToken(postfix, popToken(&opStack));
-                }
-                if (!isEmptyToken(&opStack))
-                    popToken(&opStack); // pop '('
-            }
-            else
-            {
-                while (!isEmptyToken(&opStack) && precedence(peekToken(&opStack)[0]) >= precedence(token[0]))
-                {
-                    pushToken(postfix, popToken(&opStack));
-                }
-                pushToken(&opStack, token);
-            }
+            if (!empty(&operators))
+                pop(&operators); // Pop "("
             i++;
-            continue;
         }
-        // Invalid character
-        i++;
-    }
-    while (!isEmptyToken(&opStack))
-    {
-        pushToken(postfix, popToken(&opStack));
-    }
-}
 
-int evalPostfix(TokenStack *postfix)
-{
-    IntStack valStack;
-    initIntStack(&valStack);
-    for (int i = 0; i < postfix->count; i++)
-    {
-        char *tok = postfix->data[i];
-        if (isOperator(tok))
+        else if (isOperator(infix[i]))
         {
-            int b = popInt(&valStack);
-            int a = popInt(&valStack);
-            switch (tok[0])
+            char op[2] = {infix[i++], '\0'};
+
+            while (!empty(&operators) &&
+                   precedence(peek(&operators)->data[0]) >= precedence(op[0]) &&
+                   strcmp(peek(&operators)->data, "(") != 0)
             {
-            case '+':
-                pushInt(&valStack, a + b);
-                break;
-            case '-':
-                pushInt(&valStack, a - b);
-                break;
-            case '*':
-                pushInt(&valStack, a * b);
-                break;
-            case '/':
-                pushInt(&valStack, a / b);
-                break;
+                Tree *topOp = pop(&operators);
+                Tree *right = pop(&operands);
+                Tree *left = pop(&operands);
+                topOp->kiri = left;
+                topOp->kanan = right;
+                push(&operands, topOp);
             }
-        }
-        else
-        {
-            pushInt(&valStack, atoi(tok));
+
+            push(&operators, createNode(op));
         }
     }
-    return popInt(&valStack);
-}
 
-void showPostfix(TokenStack *postfix)
-{
-    for (int i = 0; i < postfix->count; i++)
+    while (!empty(&operators))
     {
-        printf("%s ", postfix->data[i]);
+        Tree *op = pop(&operators);
+        Tree *right = pop(&operands);
+        Tree *left = pop(&operands);
+        op->kiri = left;
+        op->kanan = right;
+        push(&operands, op);
     }
-    printf("\n");
+
+    return pop(&operands); // Final root
 }
 
+// Evaluation
+double applyOperator(char op, double a, double b)
+{
+    switch (op)
+    {
+    case '+':
+        return a + b;
+    case '-':
+        return a - b;
+    case '*':
+        return a * b;
+    case '/':
+        return a / b;
+    }
+    return 0.0;
+}
+
+double evaluate(Tree *root)
+{
+    if (!isOperator(root->data[0]) || (strlen(root->data) > 1)) // catch multi-digit decimals
+        return strtod(root->data, NULL);
+    double left = evaluate(root->kiri);
+    double right = evaluate(root->kanan);
+    return applyOperator(root->data[0], left, right);
+}
+
+// Main
 int main()
 {
-    char input[MAX_STRING];
-    TokenStack postfix;
-    initTokenStack(&postfix);
+    char expr[MAX_STR];
+    printf("Enter infix expression (with spaces between numbers/operators, e.g., 12 + 3 * ( 4 - 2) ): ");
+    fgets(expr, sizeof(expr), stdin);
+    expr[strcspn(expr, "\n")] = '\0';
 
-    printf("Enter infix expression (space optional, e.g. -5+12*(3-2)): ");
-    fgets(input, sizeof(input), stdin);
-    input[strcspn(input, "\n")] = 0;
+    Tree *root = buildTreeFromInfix(expr);
 
-    infixToPostfix(input, &postfix);
+    printf("\nPreorder (Prefix): ");
+    preorder(root);
+    printf("\nInorder  (Infix):  ");
+    inorder(root);
+    printf("\nPostorder(Postfix): ");
+    postorder(root);
 
-    printf("Postfix expression: ");
-    showPostfix(&postfix);
+    double result = evaluate(root);
+    printf("\n\nResult: %.2lf\n", result); // Show 2 decimal places
 
-    printf("Evaluating postfix expression...\n");
-    printf("Result: %d\n", evalPostfix(&postfix));
     return 0;
 }
